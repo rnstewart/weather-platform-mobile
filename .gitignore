@@ -22,5 +22,7 @@ iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcshareddata/xcdebugger/
 iosWeatherPlatform/iosWeatherPlatform.xcodeproj/xcshareddata/
 iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcuserdata/rnstewart.xcuserdatad
 
+androidWeatherPlatform/src/main/assets/config/apiKeys.json
+
 .DS_Store
 .externalNativeBuild
