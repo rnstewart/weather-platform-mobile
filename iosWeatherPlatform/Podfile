@@ -1,0 +1,5 @@
+target 'iosWeatherPlatform' do
+  use_frameworks!
+  platform :ios, '14.1'
+  pod 'sharedWeatherPlatform', :path => '../sharedWeatherPlatform'
+end

@@ -1,0 +1,16 @@
+PODS:
+  - sharedWeatherPlatform (1.0)
+
+DEPENDENCIES:
+  - sharedWeatherPlatform (from `../sharedWeatherPlatform`)
+
+EXTERNAL SOURCES:
+  sharedWeatherPlatform:
+    :path: "../sharedWeatherPlatform"
+
+SPEC CHECKSUMS:
+  sharedWeatherPlatform: dac4bc880489a2205937d5bb1e2fb4d4c20a2112
+
+PODFILE CHECKSUM: 35212ab48e817d8e1f68f83658d778ba5c001c3e
+
+COCOAPODS: 1.11.2
