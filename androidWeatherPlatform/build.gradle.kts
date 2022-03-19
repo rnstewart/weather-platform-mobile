@@ -1,27 +1,93 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.squareup.sqldelight")
+    kotlin("kapt")
+    id("com.google.firebase.crashlytics")
+    kotlin("plugin.serialization")
 }
 
+val composeVersion = findProperty("composeVersion") as String
+val navigationVersion = findProperty("navigationVersion")
+val ktorVersion = findProperty("ktorVersion")
+val okHttpVersion = findProperty("okHttpVersion")
+val napierVersion = findProperty("napierVersion")
+val sqlDelightVersion = findProperty("sqlDelightVersion")
+val coroutinesVersion = findProperty("coroutinesVersion")
+val klockVersion = findProperty("klockVersion")
+val serializationVersion = findProperty("serializationVersion")
+val firebaseCrashlyticsVersion = findProperty("firebaseCrashlyticsVersion")
+val androidMaterialVersion = findProperty("androidMaterialVersion")
+val appCompatVersion = findProperty("appCompatVersion")
+
+val daggerVersion = "2.41"
+val lifecycleVersion = "1.1.1"
+
 android {
-    compileSdk = 31
+    val compileSdkVersion = (findProperty("compileSdk") as String).toInt()
+    val minSdkVersion = (findProperty("minSdk") as String).toInt()
+    val targetSdkVersion = (findProperty("targetSdk") as String).toInt()
+
+    val majorVersion = (findProperty("majorVersion") as String).toInt()
+    val minorVersion = (findProperty("minorVersion") as String).toInt()
+    val patchVersion = (findProperty("patchVersion") as String).toInt()
+    val testVersion = (findProperty("testVersion") as String).toInt()
+
+    compileSdk = compileSdkVersion
     defaultConfig {
         applicationId = "com.zmosoft.weatherplatform.android"
-        minSdk = 21
-        targetSdk = 31
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = minSdkVersion
+        targetSdk = targetSdkVersion
+        versionCode = (majorVersion * 100000) + (minorVersion * 1000) + (patchVersion * 100) + testVersion
+        versionName = if (testVersion > 0) {
+            "${majorVersion}.${minorVersion}.${patchVersion}.${testVersion}"
+        } else {
+            "${majorVersion}.${minorVersion}.${patchVersion}"
+        }
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), File("proguard-rules.pro"))
         }
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = composeVersion
     }
 }
 
 dependencies {
     implementation(project(":sharedWeatherPlatform"))
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation("com.google.android.material:material:$androidMaterialVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("android.arch.lifecycle:extensions:$lifecycleVersion")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    implementation("androidx.compose.runtime:runtime:$composeVersion")
+    implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
+    implementation("androidx.compose.material:material:$composeVersion")
+    implementation("androidx.navigation:navigation-compose:$navigationVersion")
+    implementation("com.soywiz.korlibs.klock:klock:$klockVersion")
+    implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
+    implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
+    implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-auth-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-serialization-jvm:$ktorVersion")
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("com.google.dagger:dagger-android:$daggerVersion")
+    implementation("com.google.dagger:dagger-android-support:$daggerVersion")
+    implementation("io.github.aakira:napier:$napierVersion")
+
+    kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
+    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 }

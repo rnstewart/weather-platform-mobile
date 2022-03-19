@@ -1,5 +1,5 @@
 PODS:
-  - sharedWeatherPlatform (1.0)
+  - sharedWeatherPlatform (1.0.0)
 
 DEPENDENCIES:
   - sharedWeatherPlatform (from `../sharedWeatherPlatform`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../sharedWeatherPlatform"
 
 SPEC CHECKSUMS:
-  sharedWeatherPlatform: dac4bc880489a2205937d5bb1e2fb4d4c20a2112
+  sharedWeatherPlatform: 4fb81a99a1a105ab9c93b8c1fe4277e5400946a6
 
 PODFILE CHECKSUM: 35212ab48e817d8e1f68f83658d778ba5c001c3e
 
