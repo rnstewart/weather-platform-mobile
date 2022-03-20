@@ -12,11 +12,13 @@ import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataRespon
 fun MainScreen(
     modifier: Modifier = Modifier,
     weatherData: WeatherDataResponse? = null,
+    loading: Boolean = false,
     onSearchClicked: (String) -> Unit
 ) {
     Scaffold(modifier = modifier) {
         WeatherSearchScreen(
             weatherData = weatherData,
+            loading = loading,
             onSearchClicked = onSearchClicked
         )
     }

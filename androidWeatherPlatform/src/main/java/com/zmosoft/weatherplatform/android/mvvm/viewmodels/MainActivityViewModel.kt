@@ -15,8 +15,10 @@ class MainActivityViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository
 ) : ViewModel() {
     val weatherData: MutableState<WeatherDataResponse?> = mutableStateOf(null)
+    val loading = mutableStateOf(false)
 
     fun searchWeather(query: String) {
+        loading.value = true
         viewModelScope.launch {
             val result = weatherRepository.searchWeather(query = query)
 
@@ -26,6 +28,7 @@ class MainActivityViewModel @Inject constructor(
                 } else {
                     weatherData.value = null
                 }
+                loading.value = false
             }
         }
     }

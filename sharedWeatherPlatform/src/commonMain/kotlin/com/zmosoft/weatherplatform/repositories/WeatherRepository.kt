@@ -1,6 +1,7 @@
 package com.zmosoft.weatherplatform.repositories
 
 import com.zmosoft.weatherplatform.api.APIResponse
+import com.zmosoft.weatherplatform.api.ApiConfig
 import com.zmosoft.weatherplatform.api.OpenWeatherService
 import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataResponse
 import com.zmosoft.weatherplatform.utils.BackgroundDispatcher
@@ -15,4 +16,11 @@ class WeatherRepository(
         }
     }
 
+    companion object {
+        fun instance(): WeatherRepository {
+            return WeatherRepository(
+                OpenWeatherService(ApiConfig.apiKeys)
+            )
+        }
+    }
 }

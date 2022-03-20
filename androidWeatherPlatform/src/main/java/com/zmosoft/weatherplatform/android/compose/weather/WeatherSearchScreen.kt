@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -26,6 +27,7 @@ import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataRespon
 fun WeatherSearchScreen(
     modifier: Modifier = Modifier,
     weatherData: WeatherDataResponse? = null,
+    loading: Boolean = false,
     onSearchClicked: (String) -> Unit
 ) {
     var searchQuery by remember {
@@ -64,7 +66,12 @@ fun WeatherSearchScreen(
                     searchQuery = it
                 }
             )
-            if (searchQuery.isNotEmpty()) {
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                )
+            } else if (searchQuery.isNotEmpty()) {
                 Image(
                     modifier = Modifier
                         .padding(start = 8.dp)
@@ -170,6 +177,7 @@ fun PreviewWeatherSearchScreen() {
                     sunset = 1647799183
                 )
             ),
+            loading = true,
             onSearchClicked = {}
         )
     }
