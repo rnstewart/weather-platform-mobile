@@ -2,6 +2,7 @@ package com.zmosoft.weatherplatform.api.models.response.weather
 
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
+import com.zmosoft.weatherplatform.api.models.response.ResponseBase
 import com.zmosoft.weatherplatform.utils.Constants
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,13 +10,12 @@ import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
 
 @Serializable
-class WeatherData {
+class WeatherDataResponse : ResponseBase() {
     @Transient
     private val timeFormat = DateFormat(Constants.TIME_FORMAT)
     
     var id: Long? = null
     var name: String? = null
-    var cod: Int? = null
     var coord: Coord? = null
     var weather: List<Weather>? = null
     var sys: Sys? = null

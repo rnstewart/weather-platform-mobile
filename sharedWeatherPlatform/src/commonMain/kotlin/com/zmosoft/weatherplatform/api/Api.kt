@@ -111,7 +111,7 @@ open class Api (
                                 this.body = data
                             }
                         }
-                        apply(request.params)
+                        apply(request.queryParams)
                         if (PlatformInfo.isDebug()) {
                             val parameters: List<String> = url.parameters.entries().flatMap {
                                 it.value
