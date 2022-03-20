@@ -87,6 +87,7 @@ dependencies {
     implementation("com.google.dagger:dagger-android:$daggerVersion")
     implementation("com.google.dagger:dagger-android-support:$daggerVersion")
     implementation("io.github.aakira:napier:$napierVersion")
+    implementation("io.coil-kt:coil-compose:1.4.0")
 
     kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")

@@ -1,22 +1,21 @@
-package com.zmosoft.weatherplatform.utils
+package com.zmosoft.weatherplatform.android.api.models
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 import com.zmosoft.weatherplatform.android.R
 import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataResponse
+import com.zmosoft.weatherplatform.utils.kelvinToFahrenheit
 import kotlin.math.roundToInt
 
-fun WeatherDataResponse.getSunriseIcon(context: Context): Drawable? {
+fun WeatherDataResponse.getSunriseIcon(context: Context): Int? {
     return if (getSunriseStr()?.isNotEmpty() == true)
-        ContextCompat.getDrawable(context, R.drawable.ic_sunrise_32dp)
+        R.drawable.ic_sunrise_32dp
     else
         null
 }
 
-fun WeatherDataResponse.getSunsetIcon(context: Context): Drawable? {
+fun WeatherDataResponse.getSunsetIcon(context: Context): Int? {
     return if (getSunsetStr()?.isNotEmpty() == true)
-        ContextCompat.getDrawable(context, R.drawable.ic_sunset_32dp)
+        R.drawable.ic_sunset_32dp
     else
         null
 }
@@ -49,9 +48,9 @@ fun WeatherDataResponse.getCurrentTempStr(context: Context?): String? {
     }
 }
 
-fun WeatherDataResponse.getWindIcon(context: Context): Drawable? {
+fun WeatherDataResponse.getWindIcon(context: Context): Int? {
     return if (getWindStr(context)?.isNotEmpty() == true)
-        ContextCompat.getDrawable(context, R.drawable.ic_wind_32dp)
+        R.drawable.ic_wind_32dp
     else
         null
 }

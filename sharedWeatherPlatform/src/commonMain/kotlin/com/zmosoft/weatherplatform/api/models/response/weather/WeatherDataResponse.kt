@@ -10,22 +10,22 @@ import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
 
 @Serializable
-class WeatherDataResponse : ResponseBase() {
+data class WeatherDataResponse(
+    var id: Long? = null,
+    var name: String? = null,
+    var coord: Coord? = null,
+    var weather: List<Weather>? = null,
+    var sys: Sys? = null,
+    var base: String? = null,
+    var main: Main? = null,
+    var visibility: Double? = null,
+    var wind: Wind? = null,
+    var rain: Rain? = null,
+    var dt: Long? = null,
+    var timeZone: Long? = null
+) : ResponseBase() {
     @Transient
     private val timeFormat = DateFormat(Constants.TIME_FORMAT)
-    
-    var id: Long? = null
-    var name: String? = null
-    var coord: Coord? = null
-    var weather: List<Weather>? = null
-    var sys: Sys? = null
-    var base: String? = null
-    var main: Main? = null
-    var visibility: Double? = null
-    var wind: Wind? = null
-    var rain: Rain? = null
-    var dt: Long? = null
-    var timeZone: Long? = null
 
     val timeZoneHours: Int?
         get() = timeZone?.toDouble()?.let {
@@ -33,55 +33,55 @@ class WeatherDataResponse : ResponseBase() {
         }?.roundToInt()
 
     @Serializable
-    class Coord {
-        var lon: Double? = null
+    data class Coord(
+        var lon: Double? = null,
         var lat: Double? = null
-    }
+    )
 
     @Serializable
-    class Weather {
-        var id: Long? = null
-        var main: String? = null
-        var description: String? = null
+    data class Weather(
+        var id: Long? = null,
+        var main: String? = null,
+        var description: String? = null,
         var icon: String? = null
-    }
+    )
 
     @Serializable
-    class Main {
-        var temp: Double? = null
-        var pressure: Double? = null
-        var humidity: Double? = null
+    data class Main(
+        var temp: Double? = null,
+        var pressure: Double? = null,
+        var humidity: Double? = null,
         @SerialName("temp_min")
-        var tempMin: Double? = null
+        var tempMin: Double? = null,
         @SerialName("temp_max")
         var tempMax: Double? = null
-    }
+    )
 
     @Serializable
-    class Wind {
-        var speed: Double? = null
+    data class Wind(
+        var speed: Double? = null,
         var deg: Int? = null
-    }
+    )
 
     @Serializable
-    class Rain {
+    data class Rain(
         @SerialName("1h")
         var oneH: Double? = null
-    }
+    )
 
     @Serializable
-    class Clouds {
+    data class Clouds(
         var all: Double? = null
-    }
+    )
 
     @Serializable
-    class Sys {
-        var type: Int? = null
-        var id: Long? = null
-        var country: String? = null
-        var sunrise: Long? = null
+    data class Sys(
+        var type: Int? = null,
+        var id: Long? = null,
+        var country: String? = null,
+        var sunrise: Long? = null,
         var sunset: Long? = null
-    }
+    )
 
 
     fun getCurrentWeatherCondition(): String? {
