@@ -51,7 +51,7 @@ open class Api (
             install(JsonFeature) {
                 serializer = KotlinxSerializer(jsonParser)
                 acceptContentTypes = listOf(
-                    ContentType.Text.Html
+                    ContentType.Application.Json
                 )
             }
             if (PlatformInfo.isDebug()) {
@@ -62,9 +62,6 @@ open class Api (
             }
             defaultRequest {
                 host = baseUrl
-                parameter("AppKey", "${PlatformInfo.appReference()}boost")
-                val appVersion = PlatformInfo.appVersion()
-                parameter("Version", appVersion)
                 val authHeader = auth?.authHeader
                 if (authHeader?.isNotEmpty() == true) {
                     header("Authorization", "Basic $authHeader")

@@ -18,7 +18,7 @@ data class APIResponse<T : ResponseBase>(
         get() = statusCode == HttpStatusCode.NotFound
 
     val error: APIError?
-        get() = if (data?.success == true && statusCode.isSuccess()) {
+        get() = if (statusCode.isSuccess()) {
             null
         } else {
             val errorMsg = data?.message

@@ -1,19 +1,24 @@
 package com.zmosoft.weatherplatform.android.compose.main
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.zmosoft.weatherplatform.android.compose.WeatherPlatformTheme
+import com.zmosoft.weatherplatform.android.compose.weather.WeatherSearchScreen
+import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataResponse
 
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    weatherData: WeatherDataResponse? = null,
+    onSearchClicked: (String) -> Unit
 ) {
-    Column(
-        modifier = modifier
-    ) {
-
+    Scaffold(modifier = modifier) {
+        WeatherSearchScreen(
+            weatherData = weatherData,
+            onSearchClicked = onSearchClicked
+        )
     }
 }
 
@@ -21,6 +26,8 @@ fun MainScreen(
 @Composable
 fun PreviewMainScreen() {
     WeatherPlatformTheme {
-        MainScreen()
+        MainScreen(
+            onSearchClicked = {}
+        )
     }
 }

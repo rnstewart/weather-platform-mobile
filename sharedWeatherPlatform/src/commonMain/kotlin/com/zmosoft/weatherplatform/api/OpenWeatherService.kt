@@ -6,7 +6,7 @@ import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataRespon
 class OpenWeatherService(
     private val apiKeys: APIKeys
 ) : Api(
-    baseUrl = "https://${apiKeys.openWeatherMap.apiHost}"
+    baseUrl = apiKeys.openWeatherMap.apiHost
 ) {
     suspend fun getCurrentWeatherDataByCity(query: String = "", latitude: Double? = null, longitude: Double? = null): APIResponse<WeatherDataResponse> {
         return apiCall(

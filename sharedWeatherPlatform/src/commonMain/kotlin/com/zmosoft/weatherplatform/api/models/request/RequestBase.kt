@@ -13,7 +13,7 @@ abstract class RequestBase(
     val bodyData: Any? = null,
     val expectSuccess: Boolean = true,
     val requireAuth: Boolean = true,
-    private val apiVersion: Int = 1
+    private val apiVersion: String = "2.5"
 ) {
     val fullPath: String
         get() = "data/$apiVersion/$path"
