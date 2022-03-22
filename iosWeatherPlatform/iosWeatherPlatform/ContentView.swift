@@ -2,13 +2,12 @@ import SwiftUI
 import sharedWeatherPlatform
 
 struct ContentView: View {
-    @State var api: OpenWeatherService? = nil
+    @State var api: OpenWeatherService = OpenWeatherService.Companion().instance()
     
 	var body: some View {
         VStack {
+            Text("Hello")
         }.onAppear {
-            let apiKeys = Bundle.main.decode(APIKeysCodable.self, from: "apiKeys.json")
-            api = OpenWeatherService.Companion().instance(apiKeys: apiKeys.toApiKeys())
         }
     }
 }
