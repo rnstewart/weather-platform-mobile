@@ -19,10 +19,11 @@ iosWeatherPlatform/Pods/
 iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcuserdata/rnstewart.xcuserdatad/xcdebugger/
 iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcuserdata/rnstewart.xcuserdatad/UserInterfaceState.xcuserstate
 iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcshareddata/xcdebugger/
+iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcshareddata/
 iosWeatherPlatform/iosWeatherPlatform.xcodeproj/xcshareddata/
 iosWeatherPlatform/iosWeatherPlatform.xcworkspace/xcuserdata/rnstewart.xcuserdatad
-
 androidWeatherPlatform/src/main/assets/config/apiKeys.json
+iosWeatherPlatform/iosWeatherPlatform/apiKeys.json
 
 .DS_Store
 .externalNativeBuild

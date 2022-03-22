@@ -2,11 +2,15 @@ import SwiftUI
 import sharedWeatherPlatform
 
 struct ContentView: View {
-	let greet = Greeting().greeting()
-
+    @State var api: OpenWeatherService? = nil
+    
 	var body: some View {
-		Text(greet)
-	}
+        VStack {
+        }.onAppear {
+            let apiKeys = Bundle.main.decode(APIKeysCodable.self, from: "apiKeys.json")
+            api = OpenWeatherService.Companion().instance(apiKeys: apiKeys.toApiKeys())
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {

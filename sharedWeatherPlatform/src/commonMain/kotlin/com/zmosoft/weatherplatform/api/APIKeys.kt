@@ -3,18 +3,18 @@ package com.zmosoft.weatherplatform.api
 import kotlinx.serialization.Serializable
 
 @Serializable
-class APIKeys {
-    val openWeatherMap: OpenWeatherMap = OpenWeatherMap()
+data class APIKeys(
+    val openWeatherMap: OpenWeatherMap = OpenWeatherMap(),
     val googleMaps: GoogleMaps = GoogleMaps()
+) {
+    @Serializable
+    data class OpenWeatherMap(
+        val apiKey: String = "",
+        val apiHost: String = ""
+    )
 
     @Serializable
-    class OpenWeatherMap {
-        val apiKey = ""
-        val apiHost = ""
-    }
-
-    @Serializable
-    class GoogleMaps {
-        val apiKey = ""
-    }
+    data class GoogleMaps(
+        val apiKey: String = ""
+    )
 }
