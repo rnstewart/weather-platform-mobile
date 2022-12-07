@@ -19,6 +19,7 @@ val serializationVersion = findProperty("serializationVersion")
 val firebaseCrashlyticsVersion = findProperty("firebaseCrashlyticsVersion")
 val androidMaterialVersion = findProperty("androidMaterialVersion")
 val appCompatVersion = findProperty("appCompatVersion")
+val kodeinVersion = findProperty("kodeinVersion")
 
 val daggerVersion = "2.41"
 val lifecycleVersion = "1.1.1"
@@ -88,6 +89,9 @@ dependencies {
     implementation("com.google.dagger:dagger-android:$daggerVersion")
     implementation("com.google.dagger:dagger-android-support:$daggerVersion")
     implementation("io.github.aakira:napier:$napierVersion")
+    implementation("org.kodein.di:kodein-di-framework-android-core:$kodeinVersion")
+    implementation("org.kodein.di:kodein-di-framework-android-support:$kodeinVersion")
+    implementation("org.kodein.di:kodein-di-framework-android-x:$kodeinVersion")
     implementation("io.coil-kt:coil-compose:1.4.0")
 
     kapt("com.google.dagger:dagger-android-processor:$daggerVersion")

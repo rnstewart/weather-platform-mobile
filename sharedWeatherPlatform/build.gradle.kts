@@ -27,6 +27,7 @@ kotlin {
     val serializationVersion = findProperty("serializationVersion")
     val firebaseCrashlyticsVersion = findProperty("firebaseCrashlyticsVersion")
     val androidMaterialVersion = findProperty("androidMaterialVersion")
+    val kodeinVersion = findProperty("kodeinVersion")
 
     android()
     iosX64()
@@ -60,6 +61,7 @@ kotlin {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("com.soywiz.korlibs.klock:klock:$klockVersion")
                 implementation("io.github.aakira:napier:$napierVersion")
+                api("org.kodein.di:kodein-di:$kodeinVersion")
             }
         }
         val commonTest by getting {

@@ -100,7 +100,7 @@ fun WeatherSearchScreen(
                     style = MaterialTheme.typography.h5
                 )
                 Text(
-                    text = weatherData?.getCurrentWeatherCondition() ?: ""
+                    text = weatherData?.currentWeatherCondition ?: ""
                 )
             }
             val weatherIconUrl = weatherData?.getWeatherIconUrl(LocalContext.current)
@@ -133,19 +133,19 @@ fun WeatherSearchScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.weight(1.0f))
-            weatherData?.getSunriseIcon(LocalContext.current)?.let { sunriseIcon ->
+            weatherData?.sunriseIcon?.let { sunriseIcon ->
                 Image(
                     painter = painterResource(id = sunriseIcon),
                     contentDescription = null
                 )
-                Text(text = weatherData.getSunriseStr() ?: "")
+                Text(text = weatherData.sunriseStr ?: "")
             }
-            weatherData?.getSunsetIcon(LocalContext.current)?.let { sunsetIcon ->
+            weatherData?.sunsetIcon?.let { sunsetIcon ->
                 Image(
                     painter = painterResource(id = sunsetIcon),
                     contentDescription = null
                 )
-                Text(text = weatherData.getSunsetStr() ?: "")
+                Text(text = weatherData.sunsetStr ?: "")
             }
             Spacer(modifier = Modifier.weight(1.0f))
         }

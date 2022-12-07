@@ -6,19 +6,17 @@ import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataRespon
 import com.zmosoft.weatherplatform.utils.kelvinToFahrenheit
 import kotlin.math.roundToInt
 
-fun WeatherDataResponse.getSunriseIcon(context: Context): Int? {
-    return if (getSunriseStr()?.isNotEmpty() == true)
+val WeatherDataResponse.sunriseIcon: Int?
+    get() = if (sunriseStr?.isNotEmpty() == true)
         R.drawable.ic_sunrise_32dp
     else
         null
-}
 
-fun WeatherDataResponse.getSunsetIcon(context: Context): Int? {
-    return if (getSunsetStr()?.isNotEmpty() == true)
+val WeatherDataResponse.sunsetIcon: Int?
+    get() = if (sunsetStr?.isNotEmpty() == true)
         R.drawable.ic_sunset_32dp
     else
         null
-}
 
 fun WeatherDataResponse.getWindStr(context: Context): String? {
     return wind?.let {

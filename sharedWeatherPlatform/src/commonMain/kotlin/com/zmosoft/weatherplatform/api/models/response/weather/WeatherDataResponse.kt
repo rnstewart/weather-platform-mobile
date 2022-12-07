@@ -84,26 +84,22 @@ data class WeatherDataResponse(
     )
 
 
-    fun getCurrentWeatherCondition(): String? {
-        return weather?.getOrNull(0)?.main
-    }
-    
-    fun getSunriseStr(): String? {
-        return sys?.sunrise?.let {
-            DateTimeTz.fromUnix(it * 1000).format(timeFormat)
-        } ?: run {
-            null
-        }
+    val currentWeatherCondition: String?
+        get() = weather?.getOrNull(0)?.main
+
+    val sunriseStr: String?
+        get() = sys?.sunrise?.let {
+        DateTimeTz.fromUnix(it * 1000).format(timeFormat)
+    } ?: run {
+        null
     }
 
-    fun getSunsetStr(): String? {
-        val sunset = sys?.sunset
-        return sunset?.let {
+    val sunsetStr: String?
+        get() = sys?.sunset?.let { sunset ->
             DateTimeTz.fromUnix(sunset * 1000).format(timeFormat)
         } ?: run {
             null
         }
-    }
 
     fun getWindDirectionString(deg: Int?): String {
         return deg?.toDouble()?.let {

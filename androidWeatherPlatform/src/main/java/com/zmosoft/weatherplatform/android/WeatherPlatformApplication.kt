@@ -1,24 +1,25 @@
 package com.zmosoft.weatherplatform.android
 
 import android.app.Application
-import com.zmosoft.weatherplatform.android.di.AppModule
-import com.zmosoft.weatherplatform.android.di.ApplicationComponent
-import com.zmosoft.weatherplatform.android.di.DaggerApplicationComponent
+import com.zmosoft.weatherplatform.android.di.AndroidModules
+import com.zmosoft.weatherplatform.di.SharedModules
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 
-class WeatherPlatformApplication : Application() {
-    lateinit var appComponent: ApplicationComponent
-
+class WeatherPlatformApplication : Application(), DIAware {
     override fun onCreate() {
         super.onCreate()
 
         Napier.base(DebugAntilog())
+    }
 
-        appComponent = DaggerApplicationComponent.builder()
-            .appModule(AppModule(this))
-            .build().apply {
-                inject(this@WeatherPlatformApplication)
-            }
+    override val di by DI.lazy {
+        importAll(
+            AndroidModules.vmModule,
+            SharedModules.dataModule,
+            SharedModules.repositoriesModule
+        )
     }
 }
