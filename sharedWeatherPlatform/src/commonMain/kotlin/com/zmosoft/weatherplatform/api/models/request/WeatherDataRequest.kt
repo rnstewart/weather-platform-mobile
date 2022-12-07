@@ -13,13 +13,10 @@ class WeatherDataRequest(
     method = HttpMethod.Get,
     path = "weather",
     requireAuth = false,
-    queryParams = {
-        if (query.isNotEmpty()) {
-            parameter("q", query)
-        } else if (latitude != null && longitude != null) {
-            parameter("lat", latitude.toString())
-            parameter("lon", longitude.toString())
-        }
-        parameter("appid", apiKeys.openWeatherMap.apiKey)
-    }
+    queryParams = mapOf(
+        "q" to query,
+        "lat" to latitude.toString(),
+        "lon" to longitude.toString(),
+        "appid" to apiKeys.openWeatherMap.apiKey
+    )
 )

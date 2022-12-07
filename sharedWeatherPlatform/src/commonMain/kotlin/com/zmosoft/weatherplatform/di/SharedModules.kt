@@ -2,6 +2,7 @@ package com.zmosoft.weatherplatform.di
 
 import com.zmosoft.weatherplatform.api.ApiConfig
 import com.zmosoft.weatherplatform.api.OpenWeatherService
+import com.zmosoft.weatherplatform.api.WeatherIOService
 import com.zmosoft.weatherplatform.repositories.WeatherRepository
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -18,6 +19,13 @@ object SharedModules {
         bind {
             singleton {
                 OpenWeatherService(
+                    apiKeys = instance()
+                )
+            }
+        }
+        bind {
+            singleton {
+                WeatherIOService(
                     apiKeys = instance()
                 )
             }

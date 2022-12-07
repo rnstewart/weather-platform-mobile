@@ -9,12 +9,22 @@ abstract class RequestBase(
     val method: HttpMethod,
     val path: String,
     val contentType: ContentType = ContentType.Application.Json,
-    val queryParams: HttpRequestBuilder.() -> Unit = {},
+    val pathParams: List<Any> = listOf(),
+    val queryParams: Map<String, Any> = mapOf(),
     val bodyData: Any? = null,
     val expectSuccess: Boolean = true,
     val requireAuth: Boolean = true,
     private val apiVersion: String = "2.5"
 ) {
     val fullPath: String
-        get() = "data/$apiVersion/$path"
+        get() = "api/v$apiVersion/$path" + if (pathParams.isNotEmpty())
+            "/" + pathParams.map { it.toString().trim() }.filter { it.isNotEmpty() }.joinToString("/")
+        else
+            ""
+
+    val params: HttpRequestBuilder.() -> Unit = {
+        queryParams.forEach { (key, value) ->
+            parameter(key, value.toString())
+        }
+    }
 }
