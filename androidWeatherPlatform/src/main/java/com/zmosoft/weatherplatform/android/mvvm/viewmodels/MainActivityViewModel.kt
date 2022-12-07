@@ -9,9 +9,8 @@ import com.zmosoft.weatherplatform.repositories.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class MainActivityViewModel @Inject constructor(
+class MainActivityViewModel(
     private val weatherRepository: WeatherRepository
 ) : ViewModel() {
     val weatherData: MutableState<WeatherDataResponse?> = mutableStateOf(null)

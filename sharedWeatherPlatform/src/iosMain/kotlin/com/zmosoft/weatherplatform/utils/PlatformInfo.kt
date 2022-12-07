@@ -12,6 +12,6 @@ actual object PlatformInfo {
     }
 
     actual fun isDebug(): Boolean {
-        return false
+        return Platform.isDebugBinary
     }
 }

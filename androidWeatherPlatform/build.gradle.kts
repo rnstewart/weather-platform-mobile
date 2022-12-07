@@ -21,7 +21,6 @@ val androidMaterialVersion = findProperty("androidMaterialVersion")
 val appCompatVersion = findProperty("appCompatVersion")
 val kodeinVersion = findProperty("kodeinVersion")
 
-val daggerVersion = "2.41"
 val lifecycleVersion = "1.1.1"
 
 android {
@@ -86,14 +85,9 @@ dependencies {
     implementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization-jvm:$ktorVersion")
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
-    implementation("com.google.dagger:dagger-android:$daggerVersion")
-    implementation("com.google.dagger:dagger-android-support:$daggerVersion")
     implementation("io.github.aakira:napier:$napierVersion")
     implementation("org.kodein.di:kodein-di-framework-android-core:$kodeinVersion")
     implementation("org.kodein.di:kodein-di-framework-android-support:$kodeinVersion")
     implementation("org.kodein.di:kodein-di-framework-android-x:$kodeinVersion")
     implementation("io.coil-kt:coil-compose:1.4.0")
-
-    kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 }
