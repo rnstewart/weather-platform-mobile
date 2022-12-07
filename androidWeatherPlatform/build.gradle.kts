@@ -57,6 +57,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = composeVersion
     }
+    namespace = "com.zmosoft.weatherplatform.android"
 }
 
 dependencies {
