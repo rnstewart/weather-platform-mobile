@@ -8,7 +8,7 @@ object AndroidModules {
     val vmModule = DI.Module("Android/VM") {
         bind<MainActivityViewModel>() with factory { activity: Activity ->
             MainActivityViewModel(
-                weatherRepository = instance(),
+                weatherRepo = instance(),
                 activity = activity
             )
         }
