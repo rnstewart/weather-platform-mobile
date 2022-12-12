@@ -1,16 +1,23 @@
 PODS:
+  - Kingfisher (7.3.2)
   - sharedWeatherPlatform (1.0.0)
 
 DEPENDENCIES:
+  - Kingfisher (~> 7.3.2)
   - sharedWeatherPlatform (from `../sharedWeatherPlatform`)
+
+SPEC REPOS:
+  trunk:
+    - Kingfisher
 
 EXTERNAL SOURCES:
   sharedWeatherPlatform:
     :path: "../sharedWeatherPlatform"
 
 SPEC CHECKSUMS:
+  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   sharedWeatherPlatform: 4fb81a99a1a105ab9c93b8c1fe4277e5400946a6
 
-PODFILE CHECKSUM: 35212ab48e817d8e1f68f83658d778ba5c001c3e
+PODFILE CHECKSUM: 562118ae7ede555b6aff395a9069eb8c0c3f922d
 
 COCOAPODS: 1.11.2

@@ -85,7 +85,7 @@ data class WeatherDataResponse(
         var sunset: Long? = null
     )
 
-    fun WeatherDataResponse.getIconUrl(density: Int): String? {
+    fun getIconUrl(density: Int): String? {
         val icon = weather?.getOrNull(0)?.icon
         return if (icon?.isNotEmpty() == true) {
             "$ICON_URL_BASE$icon@${density}x.png"
@@ -108,8 +108,8 @@ data class WeatherDataResponse(
             }
         }
 
-    val currentTempFahrenheit: Int?
-        get() = main?.temp?.kelvinToFahrenheit()?.roundToInt()
+    val currentTempFahrenheit: String?
+        get() = main?.temp?.kelvinToFahrenheit()?.roundToInt()?.toString()
 
     val currentWeatherCondition: String?
         get() = weather?.getOrNull(0)?.main

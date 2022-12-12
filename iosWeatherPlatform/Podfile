@@ -2,4 +2,5 @@ target 'iosWeatherPlatform' do
   use_frameworks!
   platform :ios, '14.1'
   pod 'sharedWeatherPlatform', :path => '../sharedWeatherPlatform'
+  pod 'Kingfisher', '~> 7.3.2'
 end

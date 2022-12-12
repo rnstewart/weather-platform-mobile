@@ -1,5 +1,6 @@
 import SwiftUI
 import sharedWeatherPlatform
+import Kingfisher
 
 struct ContentView: View {
     @State var weatherRepository: WeatherRepository? = nil
@@ -13,7 +14,7 @@ struct ContentView: View {
                 TextField(
                     "",
                     text: $searchQuery
-                ).textFieldStyle(.roundedBorder)
+                ).padding(.bottom, 8).textFieldStyle(.roundedBorder)
                 
                 if (isLoading) {
                     ProgressView()
@@ -28,15 +29,33 @@ struct ContentView: View {
             }
             
             if let data = weatherRepository?.data.data {
-                VStack {
-                    HStack {
-                        Spacer()
-                        Text(data.name ?? "")
-                            .font(.system(size: 24))
-                        Spacer()
+                HStack {
+                    Spacer()
+                    Text(data.name ?? "")
+                        .font(.system(size: 24))
+                    Spacer()
+                }
+                
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading) {
+                        Text(data.getCurrentTempStr())
+                            .font(.system(size: 20))
+                        
+                        if let currentWeatherCondition = data.currentWeatherCondition {
+                            Text(currentWeatherCondition)
+                                .font(.system(size: 18))
+                        }
+                    }
+                    
+                    let urlString = (data.getIconUrl(density: 2) ?? "")
+                    if let iconUrl = URL(string: urlString) {
+                        KFImage.url(iconUrl)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40, height: 40)
                     }
                     Spacer()
-                }.padding(8)
+                }.padding(.top, 16)
             }
             Spacer()
         }.padding(8).onAppear {

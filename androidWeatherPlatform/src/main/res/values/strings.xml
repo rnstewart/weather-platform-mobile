@@ -3,7 +3,7 @@
     <string name="app_name">Weather Platform</string>
     <string name="search_location">Search Location</string>
     <string name="current_location">Current Location</string>
-    <string name="temperature_x">%d °F</string>
+    <string name="temperature_x">%s °F</string>
     <string name="sunrise_x">Sunrise: %s</string>
     <string name="sunset_x">Sunset: %s</string>
     <string name="error_x">Error %s</string>
