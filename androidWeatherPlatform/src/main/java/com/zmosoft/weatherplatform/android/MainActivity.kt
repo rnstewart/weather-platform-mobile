@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity(), DIAware {
         setContent {
             WeatherPlatformTheme {
                 MainScreen(
-                    weatherData = viewModel.weatherData.value,
-                    loading = viewModel.loading.value,
+                    weatherData = viewModel.weatherRepository.value.data.data,
+                    loading = viewModel.weatherRepository.value.data.loading,
                     onSearchClicked = {
                         hideSoftKeyboard()
                         viewModel.searchWeather(it)

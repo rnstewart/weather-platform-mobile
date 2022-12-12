@@ -9,7 +9,8 @@ import org.kodein.di.instance
 class Repositories: DIAware {
     override val di by DI.lazy {
         importAll(
-            SharedModules.repositoriesModule
+            SharedModules.repositoriesModule,
+            SharedModules.dataModule
         )
     }
 

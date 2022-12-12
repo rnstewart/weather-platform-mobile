@@ -18,10 +18,4 @@ class OpenWeatherService(
             )
         )
     }
-
-    companion object {
-        fun instance(): OpenWeatherService {
-            return OpenWeatherService(ApiConfig.apiKeys)
-        }
-    }
 }
