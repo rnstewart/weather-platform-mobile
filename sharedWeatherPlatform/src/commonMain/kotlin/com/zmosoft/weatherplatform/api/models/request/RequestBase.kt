@@ -17,7 +17,7 @@ abstract class RequestBase(
     private val apiVersion: String = "2.5"
 ) {
     val fullPath: String
-        get() = "api/v$apiVersion/$path" + if (pathParams.isNotEmpty())
+        get() = "data/v$apiVersion/$path" + if (pathParams.isNotEmpty())
             "/" + pathParams.map { it.toString().trim() }.filter { it.isNotEmpty() }.joinToString("/")
         else
             ""
