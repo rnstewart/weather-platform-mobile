@@ -28,7 +28,8 @@ fun WeatherSearchScreen(
     modifier: Modifier = Modifier,
     weatherData: WeatherDataResponse? = null,
     loading: Boolean = false,
-    onSearchClicked: (String) -> Unit
+    onSearchClicked: (String) -> Unit,
+    onLocationClicked: () -> Unit
 ) {
     var searchQuery by remember {
         mutableStateOf("")
@@ -79,6 +80,16 @@ fun WeatherSearchScreen(
                             onSearchClicked(searchQuery)
                         },
                     painter = painterResource(id = R.drawable.ic_update_black_32dp),
+                    contentDescription = null
+                )
+            } else {
+                Image(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .clickable {
+                            onLocationClicked()
+                        },
+                    painter = painterResource(id = R.drawable.ic_location_black_32dp),
                     contentDescription = null
                 )
             }
@@ -177,8 +188,9 @@ fun PreviewWeatherSearchScreen() {
                     sunset = 1647799183
                 )
             ),
-            loading = true,
-            onSearchClicked = {}
+            loading = false,
+            onSearchClicked = {},
+            onLocationClicked = {}
         )
     }
 }

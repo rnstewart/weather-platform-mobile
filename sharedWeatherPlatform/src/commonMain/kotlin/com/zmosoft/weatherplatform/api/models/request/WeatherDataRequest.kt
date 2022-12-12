@@ -5,18 +5,25 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 
 class WeatherDataRequest(
-    private val query: String = "",
-    private val latitude: Double? = null,
-    private val longitude: Double? = null,
-    private val apiKeys: APIKeys
+    query: String = "",
+    latitude: Double? = null,
+    longitude: Double? = null,
+    apiKeys: APIKeys
 ) : RequestBase(
     method = HttpMethod.Get,
     path = "weather",
     requireAuth = false,
-    queryParams = mapOf(
-        "q" to query,
-        "lat" to latitude.toString(),
-        "lon" to longitude.toString(),
-        "appid" to apiKeys.openWeatherMap.apiKey
-    )
+    queryParams = if (query.isNotEmpty())
+        mapOf(
+            "q" to query,
+            "appid" to apiKeys.openWeatherMap.apiKey
+        )
+    else if (latitude != null && longitude != null)
+        mapOf(
+            "lat" to latitude.toString(),
+            "lon" to longitude.toString(),
+            "appid" to apiKeys.openWeatherMap.apiKey
+        )
+    else
+        mapOf()
 )

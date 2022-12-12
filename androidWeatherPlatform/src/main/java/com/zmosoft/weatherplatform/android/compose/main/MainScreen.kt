@@ -1,5 +1,6 @@
 package com.zmosoft.weatherplatform.android.compose.main
 
+import android.location.Location
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -13,13 +14,15 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     weatherData: WeatherDataResponse? = null,
     loading: Boolean = false,
-    onSearchClicked: (String) -> Unit
+    onSearchClicked: (String) -> Unit,
+    onLocationClicked: () -> Unit
 ) {
     Scaffold(modifier = modifier) {
         WeatherSearchScreen(
             weatherData = weatherData,
             loading = loading,
-            onSearchClicked = onSearchClicked
+            onSearchClicked = onSearchClicked,
+            onLocationClicked = onLocationClicked
         )
     }
 }
@@ -29,7 +32,8 @@ fun MainScreen(
 fun PreviewMainScreen() {
     WeatherPlatformTheme {
         MainScreen(
-            onSearchClicked = {}
+            onSearchClicked = {},
+            onLocationClicked = {}
         )
     }
 }

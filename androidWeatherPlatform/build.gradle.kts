@@ -62,6 +62,7 @@ android {
 
 dependencies {
     implementation(project(":sharedWeatherPlatform"))
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.material:material:$androidMaterialVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")

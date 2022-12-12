@@ -10,9 +10,17 @@ import kotlinx.coroutines.withContext
 class WeatherRepository(
     private val api: OpenWeatherService
 ) : RepositoryBase() {
-    suspend fun searchWeather(query: String): APIResponse<WeatherDataResponse> {
+    suspend fun searchWeather(
+        query: String = "",
+        latitude: Double? = null,
+        longitude: Double? = null
+    ): APIResponse<WeatherDataResponse> {
         return withContext (BackgroundDispatcher) {
-            api.getCurrentWeatherDataByCity(query = query)
+            api.getCurrentWeatherDataByLocation(
+                query = query,
+                latitude = latitude,
+                longitude = longitude
+            )
         }
     }
 
