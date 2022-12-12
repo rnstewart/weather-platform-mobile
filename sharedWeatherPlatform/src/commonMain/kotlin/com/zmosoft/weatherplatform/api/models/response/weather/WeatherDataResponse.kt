@@ -4,6 +4,8 @@ import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.zmosoft.weatherplatform.api.models.response.ResponseBase
 import com.zmosoft.weatherplatform.utils.Constants
+import com.zmosoft.weatherplatform.utils.StringFormat
+import com.zmosoft.weatherplatform.utils.kelvinToFahrenheit
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -83,6 +85,31 @@ data class WeatherDataResponse(
         var sunset: Long? = null
     )
 
+    fun WeatherDataResponse.getIconUrl(density: Int): String? {
+        val icon = weather?.getOrNull(0)?.icon
+        return if (icon?.isNotEmpty() == true) {
+            "$ICON_URL_BASE$icon@${density}x.png"
+        } else {
+            null
+        }
+    }
+
+    val windWithDirection: Pair<String, String>?
+        get() {
+            return wind?.let {
+                val dir = getWindDirectionString(it.deg)
+                val speed = it.speed?.let { speedValue ->
+                    StringFormat.formatDecimal(speedValue, decimalDigits = 1)
+                }
+                if (speed != null && dir.isNotEmpty())
+                    Pair(speed, dir)
+                else
+                    null
+            }
+        }
+
+    val currentTempFahrenheit: Int?
+        get() = main?.temp?.kelvinToFahrenheit()?.roundToInt()
 
     val currentWeatherCondition: String?
         get() = weather?.getOrNull(0)?.main

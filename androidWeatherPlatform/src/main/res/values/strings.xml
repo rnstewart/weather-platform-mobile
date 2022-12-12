@@ -10,8 +10,8 @@
     <string name="error">Error</string>
     <string name="ok">OK</string>
     <string name="error_location">Unable to get location</string>
-    <string name="wind_info">%.1f MPH</string>
-    <string name="wind_info_direction">%s, %.1f MPH</string>
+    <string name="wind_info">%s MPH</string>
+    <string name="wind_info_direction">%s, %s MPH</string>
     <string name="icon_factor">1</string>
     <string name="error_no_address">No address given</string>
     <string name="error_no_city">No city given</string>

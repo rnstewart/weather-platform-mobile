@@ -3,8 +3,6 @@ package com.zmosoft.weatherplatform.android.api.models
 import android.content.Context
 import com.zmosoft.weatherplatform.android.R
 import com.zmosoft.weatherplatform.api.models.response.weather.WeatherDataResponse
-import com.zmosoft.weatherplatform.utils.kelvinToFahrenheit
-import kotlin.math.roundToInt
 
 val WeatherDataResponse.sunriseIcon: Int?
     get() = if (sunriseStr?.isNotEmpty() == true)
@@ -19,28 +17,29 @@ val WeatherDataResponse.sunsetIcon: Int?
         null
 
 fun WeatherDataResponse.getWindStr(context: Context): String? {
-    return wind?.let {
-        val dir = getWindDirectionString(it.deg)
+    return windWithDirection?.let {
+        val speed = it.first
+        val dir = it.second
         if (dir.isNotEmpty())
             context.getString(
                 R.string.wind_info_direction,
                 dir,
-                it.speed
+                speed
             )
         else
             context.getString(
                 R.string.wind_info,
-                it.speed
+                speed
             )
     }
 }
 
 fun WeatherDataResponse.getCurrentTempStr(context: Context?): String? {
     return context?.let {
-        main?.temp?.kelvinToFahrenheit()?.roundToInt()?.let {
+        currentTempFahrenheit?.let { temp ->
             context.getString(
                 R.string.temperature_x,
-                it
+                temp
             )
         }
     }
@@ -54,12 +53,8 @@ fun WeatherDataResponse.getWindIcon(context: Context): Int? {
 }
 
 fun WeatherDataResponse.getWeatherIconUrl(context: Context): String? {
-    val icon = weather?.getOrNull(0)?.icon
-    return if (icon?.isNotEmpty() == true) {
-        val density = context.getString(R.string.icon_factor)
-        "${WeatherDataResponse.ICON_URL_BASE}$icon@${density}x.png"
-    } else {
-        null
+    return context.getString(R.string.icon_factor).toIntOrNull()?.let { density ->
+        getIconUrl(density)
     }
 }
 
