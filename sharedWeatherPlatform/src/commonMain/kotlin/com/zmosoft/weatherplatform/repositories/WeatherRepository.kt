@@ -23,12 +23,4 @@ class WeatherRepository(
             )
         }
     }
-
-    companion object {
-        fun instance(): WeatherRepository {
-            return WeatherRepository(
-                OpenWeatherService(ApiConfig.apiKeys)
-            )
-        }
-    }
 }
