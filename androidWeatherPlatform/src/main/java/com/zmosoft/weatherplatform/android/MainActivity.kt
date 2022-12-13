@@ -37,10 +37,14 @@ class MainActivity : AppCompatActivity(), DIAware {
             WeatherPlatformTheme {
                 MainScreen(
                     weatherData = viewModel.weatherRepository.value.data.data,
+                    autocompleteResults = viewModel.googleMapsRepository.value.data.autocompletePredictions,
                     loading = viewModel.loading.value,
                     onSearchClicked = {
                         hideSoftKeyboard()
                         viewModel.searchLocation(it)
+                    },
+                    onAutocompleteResultClicked = {
+                        viewModel.autocompleteResultSelected(it)
                     },
                     onLocationClicked = {
                         if (checkLocationPermission(both = true)) {

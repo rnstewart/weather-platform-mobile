@@ -3,6 +3,7 @@ package com.zmosoft.weatherplatform.repositories
 import com.zmosoft.weatherplatform.api.models.response.geo.AutocompletePlacesData
 import com.zmosoft.weatherplatform.api.APIResponse
 import com.zmosoft.weatherplatform.api.GoogleMapsService
+import com.zmosoft.weatherplatform.api.models.response.geo.PlaceDetailsResponse
 
 data class GoogleMapsRepository(
     private val api: GoogleMapsService,
@@ -11,6 +12,7 @@ data class GoogleMapsRepository(
 ): RepositoryBase() {
     data class GoogleMapsData(
         val autocompletePredictions: List<AutocompletePlacesData.Prediction> = listOf(),
+        val placeDetails: PlaceDetailsResponse.Result? = null,
         val loading: Boolean = false
     )
 
@@ -39,6 +41,21 @@ data class GoogleMapsRepository(
                 loading = false
             ),
             error = response.error
+        )
+    }
+
+    suspend fun placeDetails(
+        placeId: String,
+        fields: String? = "address_component,name,geometry"
+    ): GoogleMapsRepository {
+        val response = api.placeDetails(placeId = placeId, fields = fields)
+
+        return copy(
+            data = data.copy(
+                placeDetails = response.data?.result,
+                loading = false
+            ),
+            error = error
         )
     }
 }

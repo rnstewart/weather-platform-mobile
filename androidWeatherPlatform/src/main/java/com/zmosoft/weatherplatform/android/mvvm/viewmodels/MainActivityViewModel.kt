@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.zmosoft.weatherplatform.android.mvvm.utils.checkLocationPermission
+import com.zmosoft.weatherplatform.api.models.response.geo.AutocompletePlacesData
 import com.zmosoft.weatherplatform.repositories.GoogleMapsRepository
 import com.zmosoft.weatherplatform.repositories.WeatherRepository
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,7 @@ class MainActivityViewModel(
 ) : ViewModel() {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
     val weatherRepository = mutableStateOf(weatherRepo)
-    private val googleMapsRepository = mutableStateOf(googleMapsRepo)
+    val googleMapsRepository = mutableStateOf(googleMapsRepo)
     val loading = mutableStateOf(false)
 
     fun searchLocation(query: String) {
@@ -39,6 +40,31 @@ class MainActivityViewModel(
         }
     }
 
+    fun autocompleteResultSelected(location: AutocompletePlacesData.Prediction) {
+        loading.value = true
+
+        val placeId = location.placeId
+        if (placeId?.isNotEmpty() == true) {
+            viewModelScope.launch {
+                val repository = googleMapsRepository.value.placeDetails(
+                    placeId = placeId
+                )
+                repository.data.placeDetails?.geometry?.location?.let { location ->
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+                    if (latitude != null && longitude != null) {
+                        searchWeather(
+                            Location("Test").apply {
+                                setLatitude(latitude)
+                                setLongitude(longitude)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     private fun searchWeather(location: Location? = null) {
         loading.value = true
 
@@ -50,6 +76,9 @@ class MainActivityViewModel(
 
             withContext(Dispatchers.Main) {
                 weatherRepository.value = repository
+                googleMapsRepository.value = googleMapsRepository.value.copy(
+                    data = GoogleMapsRepository.GoogleMapsData()
+                )
                 loading.value = false
             }
         }

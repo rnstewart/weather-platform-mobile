@@ -1,7 +1,9 @@
 package com.zmosoft.weatherplatform.api
 
 import com.zmosoft.weatherplatform.api.models.request.AutocompletePlacesRequest
+import com.zmosoft.weatherplatform.api.models.request.PlaceDetailsRequest
 import com.zmosoft.weatherplatform.api.models.response.AutocompletePlacesResponse
+import com.zmosoft.weatherplatform.api.models.response.geo.PlaceDetailsResponse
 
 class GoogleMapsService(
     private val apiKeys: APIKeys
@@ -22,6 +24,19 @@ class GoogleMapsService(
             )
         )
     }
+
+    suspend fun placeDetails(
+        placeId: String,
+        fields: String? = "address_component,name,geometry"
+    ): APIResponse<PlaceDetailsResponse> {
+        return apiCall(
+            PlaceDetailsRequest(
+                placeId = placeId,
+                fields = fields,
+                apiKey = apiKeys.googleMaps.apiKey
+            )
+        )
+    }
 }
 
 //@GET("geocode/json")
@@ -34,8 +49,3 @@ class GoogleMapsService(
 //    @Query("latlng") latlng: String
 //): Response<GeocodeData>
 //
-//@GET("place/details/json")
-//suspend fun placeDetails(
-//    @Query("place_id") placeId: String,
-//    @Query("fields") fields: String? = "address_component,name,geometry"
-//): Response<PlaceDetailsData>
