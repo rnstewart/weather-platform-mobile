@@ -15,4 +15,5 @@ class Repositories: DIAware {
     }
 
     val weatherRepository: WeatherRepository by di.instance()
+    val googleMapsRepository: GoogleMapsRepository by di.instance()
 }
