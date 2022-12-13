@@ -1,8 +1,8 @@
 package com.zmosoft.weatherplatform.repositories
 
-import com.zmosoft.weatherplatform.api.models.response.geo.AutocompletePlacesData
 import com.zmosoft.weatherplatform.api.APIResponse
 import com.zmosoft.weatherplatform.api.GoogleMapsService
+import com.zmosoft.weatherplatform.api.models.response.geo.AutocompletePlacesData
 import com.zmosoft.weatherplatform.api.models.response.geo.PlaceDetailsResponse
 import com.zmosoft.weatherplatform.utils.BackgroundDispatcher
 import kotlinx.coroutines.withContext
@@ -26,6 +26,12 @@ data class GoogleMapsRepository(
         )
     }
 
+    fun clear(): GoogleMapsRepository {
+        return copy(
+            data = GoogleMapsData()
+        )
+    }
+
     suspend fun placesAutoComplete(
         input: String,
         latitude: Double? = null,
@@ -45,6 +51,34 @@ data class GoogleMapsRepository(
                 ),
                 error = response.error
             )
+        }
+    }
+
+    suspend fun autocompleteResultSelected(
+        location: AutocompletePlacesData.Prediction,
+        weatherRepository: WeatherRepository
+    ): WeatherRepository {
+        return withContext (BackgroundDispatcher) {
+            val placeId = location.placeId
+            if (placeId?.isNotEmpty() == true) {
+                val response = api.placeDetails(placeId = placeId)
+                response.data?.result?.geometry?.location?.let { locationResult ->
+                    val latitude = locationResult.latitude
+                    val longitude = locationResult.longitude
+                    if (latitude != null && longitude != null) {
+                        weatherRepository.searchWeather(
+                            latitude = latitude,
+                            longitude = longitude
+                        )
+                    } else {
+                        null
+                    }
+                } ?: weatherRepository.copy(
+                    error = response.error
+                )
+            } else {
+                weatherRepository
+            }
         }
     }
 

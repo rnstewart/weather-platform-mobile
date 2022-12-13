@@ -22,6 +22,9 @@ data class AutocompletePlacesData(
         val terms: List<Term>? = null,
         val types: List<String>? = null
     ) {
+        val name: String
+            get() = description ?: ""
+
         @kotlinx.serialization.Serializable
         data class MatchedSubstring(
             val length: Int? = null,

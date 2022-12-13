@@ -12,7 +12,7 @@ class AutocompletePlacesRequest(
     method = HttpMethod.Get,
     requireAuth = false,
     queryParams = mapOf(
-        "input" to input,
+        "input" to input.trim(),
         "location" to if (latitude != null && longitude != null)
             "$latitude,$longitude"
         else

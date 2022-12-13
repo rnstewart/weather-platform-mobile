@@ -8,6 +8,7 @@
 
 import Foundation
 import sharedWeatherPlatform
+import UIKit
 
 extension String {
     func localizedStringFromKey(comment: String = "") -> String {
@@ -46,5 +47,11 @@ extension WeatherDataResponse {
         } else {
             return ""
         }
+    }
+}
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

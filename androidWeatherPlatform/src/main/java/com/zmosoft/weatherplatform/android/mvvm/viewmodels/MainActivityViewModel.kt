@@ -2,7 +2,6 @@ package com.zmosoft.weatherplatform.android.mvvm.viewmodels
 
 import android.app.Activity
 import android.content.Context
-import android.location.Location
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -43,42 +42,30 @@ class MainActivityViewModel(
     fun autocompleteResultSelected(location: AutocompletePlacesData.Prediction) {
         loading.value = true
 
-        val placeId = location.placeId
-        if (placeId?.isNotEmpty() == true) {
-            viewModelScope.launch {
-                val repository = googleMapsRepository.value.placeDetails(
-                    placeId = placeId
-                )
-                repository.data.placeDetails?.geometry?.location?.let { location ->
-                    val latitude = location.latitude
-                    val longitude = location.longitude
-                    if (latitude != null && longitude != null) {
-                        searchWeather(
-                            Location("Test").apply {
-                                setLatitude(latitude)
-                                setLongitude(longitude)
-                            }
-                        )
-                    }
-                }
+        viewModelScope.launch {
+            val repository = googleMapsRepository.value.autocompleteResultSelected(
+                location = location,
+                weatherRepository = weatherRepository.value
+            )
+            withContext(Dispatchers.Main) {
+                weatherRepository.value = repository
+                googleMapsRepository.value = googleMapsRepository.value.clear()
             }
         }
     }
 
-    private fun searchWeather(location: Location? = null) {
+    private fun searchWeather(latitude: Double, longitude: Double) {
         loading.value = true
 
         viewModelScope.launch {
             val repository = weatherRepository.value.searchWeather(
-                latitude = location?.latitude,
-                longitude = location?.longitude
+                latitude = latitude,
+                longitude = longitude
             )
 
             withContext(Dispatchers.Main) {
                 weatherRepository.value = repository
-                googleMapsRepository.value = googleMapsRepository.value.copy(
-                    data = GoogleMapsRepository.GoogleMapsData()
-                )
+                googleMapsRepository.value = googleMapsRepository.value.clear()
                 loading.value = false
             }
         }
@@ -88,7 +75,8 @@ class MainActivityViewModel(
         if (context.checkLocationPermission(both = true)) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 searchWeather(
-                    location = location
+                    latitude = location.latitude,
+                    longitude = location.longitude
                 )
             }
         }

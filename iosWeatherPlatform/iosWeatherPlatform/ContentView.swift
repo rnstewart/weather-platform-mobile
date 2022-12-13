@@ -4,6 +4,7 @@ import Kingfisher
 
 struct ContentView: View {
     @State var weatherRepository: WeatherRepository? = nil
+    @State var googleMapsRepository: GoogleMapsRepository? = nil
     @StateObject var locationManager = LocationManager()
     @State var searchQuery = ""
     @State var isLoading: Bool = false
@@ -14,11 +15,19 @@ struct ContentView: View {
                 TextField(
                     "",
                     text: $searchQuery
-                ).padding(.bottom, 8).textFieldStyle(.roundedBorder)
+                ).padding(.bottom, 8)
+                    .padding(.top, 16)
+                    .textFieldStyle(.roundedBorder)
                 
                 if (isLoading) {
                     ProgressView()
                         .padding(6)
+                } else if (!searchQuery.isEmpty) {
+                    Image("IconUpdate")
+                        .padding(6)
+                        .onTapGesture {
+                            searchLocation(query: searchQuery)
+                        }
                 } else {
                     Image("IconLocation")
                         .padding(6)
@@ -28,7 +37,19 @@ struct ContentView: View {
                 }
             }
             
-            if let data = weatherRepository?.data.data {
+            if let autocompletePredictions = googleMapsRepository?.data.autocompletePredictions,
+               !autocompletePredictions.isEmpty {
+                List {
+                    ForEach(autocompletePredictions, id: \.self) { prediction in
+                        HStack {
+                            Text(prediction.name)
+                                .font(.system(size: 16))
+                            
+                            Spacer()
+                        }.padding(8)
+                    }
+                }
+            } else if let data = weatherRepository?.data.data {
                 HStack {
                     Spacer()
                     Text(data.name ?? "")
@@ -59,7 +80,9 @@ struct ContentView: View {
             }
             Spacer()
         }.padding(8).onAppear {
-            weatherRepository = Repositories().weatherRepository
+            let repositories = Repositories()
+            weatherRepository = repositories.weatherRepository
+            googleMapsRepository = repositories.googleMapsRepository
             locationManager.setLocationCallback { location in
                 if let location = location {
                     weatherRepository?.searchWeather(
@@ -67,6 +90,7 @@ struct ContentView: View {
                         latitude: KotlinDouble(value: location.coordinate.latitude),
                         longitude: KotlinDouble(value: location.coordinate.longitude)
                     ) { updatedRepository, error in
+                        self.googleMapsRepository = self.googleMapsRepository?.clear()
                         self.weatherRepository = updatedRepository
                     }
                 }
@@ -74,7 +98,10 @@ struct ContentView: View {
         }
     }
     
-    func getLocation() {
-        
+    func searchLocation(query: String) {
+        UIApplication.shared.endEditing()
+        googleMapsRepository?.placesAutoComplete(input: query, latitude: nil, longitude: nil) { updatedRepo, error in
+            self.googleMapsRepository = updatedRepo
+        }
     }
 }
