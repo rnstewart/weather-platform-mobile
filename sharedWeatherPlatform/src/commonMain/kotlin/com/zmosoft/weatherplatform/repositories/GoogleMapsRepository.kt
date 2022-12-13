@@ -4,6 +4,8 @@ import com.zmosoft.weatherplatform.api.models.response.geo.AutocompletePlacesDat
 import com.zmosoft.weatherplatform.api.APIResponse
 import com.zmosoft.weatherplatform.api.GoogleMapsService
 import com.zmosoft.weatherplatform.api.models.response.geo.PlaceDetailsResponse
+import com.zmosoft.weatherplatform.utils.BackgroundDispatcher
+import kotlinx.coroutines.withContext
 
 data class GoogleMapsRepository(
     private val api: GoogleMapsService,
@@ -29,33 +31,37 @@ data class GoogleMapsRepository(
         latitude: Double? = null,
         longitude: Double? = null
     ): GoogleMapsRepository {
-        val response = api.placesAutoComplete(
-            input = input,
-            latitude = latitude,
-            longitude = longitude
-        )
+        return withContext (BackgroundDispatcher) {
+            val response = api.placesAutoComplete(
+                input = input,
+                latitude = latitude,
+                longitude = longitude
+            )
 
-        return copy(
-            data = data.copy(
-                autocompletePredictions = response.data?.predictions ?: listOf(),
-                loading = false
-            ),
-            error = response.error
-        )
+            copy(
+                data = data.copy(
+                    autocompletePredictions = response.data?.predictions ?: listOf(),
+                    loading = false
+                ),
+                error = response.error
+            )
+        }
     }
 
     suspend fun placeDetails(
         placeId: String,
         fields: String? = "address_component,name,geometry"
     ): GoogleMapsRepository {
-        val response = api.placeDetails(placeId = placeId, fields = fields)
+        return withContext (BackgroundDispatcher) {
+            val response = api.placeDetails(placeId = placeId, fields = fields)
 
-        return copy(
-            data = data.copy(
-                placeDetails = response.data?.result,
-                loading = false
-            ),
-            error = error
-        )
+            copy(
+                data = data.copy(
+                    placeDetails = response.data?.result,
+                    loading = false
+                ),
+                error = error
+            )
+        }
     }
 }
