@@ -46,7 +46,17 @@ struct ContentView: View {
                                 .font(.system(size: 16))
                             
                             Spacer()
-                        }.padding(8)
+                        }.padding(8).onTapGesture {
+                            if let weatherRepository = weatherRepository {
+                                googleMapsRepository?.autocompleteResultSelected(
+                                    location: prediction,
+                                    weatherRepository: weatherRepository
+                                ) { updatedRepo, error in
+                                    self.weatherRepository = updatedRepo
+                                    self.googleMapsRepository = self.googleMapsRepository?.clear()
+                                }
+                            }
+                        }
                     }
                 }
             } else if let data = weatherRepository?.data.data {
