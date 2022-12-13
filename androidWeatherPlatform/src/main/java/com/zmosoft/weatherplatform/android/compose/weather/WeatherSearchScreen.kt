@@ -160,7 +160,7 @@ fun WeatherSearchScreen(
             }
 
             Row(
-                modifier = Modifier.padding(bottom = 16.dp),
+                modifier = Modifier.padding(vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.weight(1.0f))
@@ -175,7 +175,7 @@ fun WeatherSearchScreen(
             }
 
             Row(
-                modifier = Modifier.padding(bottom = 16.dp),
+                modifier = Modifier.padding(vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.weight(1.0f))
@@ -186,6 +186,7 @@ fun WeatherSearchScreen(
                     )
                     Text(text = weatherData.sunriseStr ?: "")
                 }
+                Spacer(modifier = Modifier.weight(1.0f))
                 weatherData.sunsetIcon?.let { sunsetIcon ->
                     Image(
                         painter = painterResource(id = sunsetIcon),
