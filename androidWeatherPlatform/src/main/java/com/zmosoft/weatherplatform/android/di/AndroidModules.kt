@@ -9,6 +9,7 @@ object AndroidModules {
         bind<MainActivityViewModel>() with factory { activity: Activity ->
             MainActivityViewModel(
                 weatherRepo = instance(),
+                googleMapsRepo = instance(),
                 activity = activity
             )
         }

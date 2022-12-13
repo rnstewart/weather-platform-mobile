@@ -22,6 +22,7 @@ data class APIKeys(
 
     @Serializable
     data class GoogleMaps(
-        val apiKey: String = ""
+        val apiKey: String = "",
+        val apiHost: String = ""
     )
 }

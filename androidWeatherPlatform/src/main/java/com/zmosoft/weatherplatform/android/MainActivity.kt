@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity(), DIAware {
             WeatherPlatformTheme {
                 MainScreen(
                     weatherData = viewModel.weatherRepository.value.data.data,
-                    loading = viewModel.weatherRepository.value.data.loading,
+                    loading = viewModel.loading.value,
                     onSearchClicked = {
                         hideSoftKeyboard()
-                        viewModel.searchWeather(it)
+                        viewModel.searchLocation(it)
                     },
                     onLocationClicked = {
                         if (checkLocationPermission(both = true)) {

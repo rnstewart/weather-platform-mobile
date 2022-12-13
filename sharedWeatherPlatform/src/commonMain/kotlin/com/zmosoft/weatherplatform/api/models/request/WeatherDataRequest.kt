@@ -9,7 +9,7 @@ class WeatherDataRequest(
     latitude: Double? = null,
     longitude: Double? = null,
     apiKeys: APIKeys
-) : RequestBase(
+) : WeatherDataRequestBase(
     method = HttpMethod.Get,
     path = "weather",
     requireAuth = false,

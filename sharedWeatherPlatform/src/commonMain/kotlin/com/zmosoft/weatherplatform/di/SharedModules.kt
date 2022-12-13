@@ -1,7 +1,9 @@
 package com.zmosoft.weatherplatform.di
 
 import com.zmosoft.weatherplatform.api.ApiConfig
+import com.zmosoft.weatherplatform.api.GoogleMapsService
 import com.zmosoft.weatherplatform.api.OpenWeatherService
+import com.zmosoft.weatherplatform.repositories.GoogleMapsRepository
 import com.zmosoft.weatherplatform.repositories.WeatherRepository
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -22,11 +24,25 @@ object SharedModules {
                 )
             }
         }
+        bind {
+            singleton {
+                GoogleMapsService(
+                    apiKeys = instance()
+                )
+            }
+        }
     }
     val repositoriesModule = DI.Module("Shared/Repositories") {
         bind {
             singleton {
                 WeatherRepository(
+                    api = instance()
+                )
+            }
+        }
+        bind {
+            singleton {
+                GoogleMapsRepository(
                     api = instance()
                 )
             }

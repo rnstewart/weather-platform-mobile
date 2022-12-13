@@ -6,25 +6,28 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 abstract class RequestBase(
-    val method: HttpMethod,
-    val path: String,
-    val contentType: ContentType = ContentType.Application.Json,
-    val pathParams: List<Any> = listOf(),
-    val queryParams: Map<String, Any> = mapOf(),
-    val bodyData: Any? = null,
-    val expectSuccess: Boolean = true,
-    val requireAuth: Boolean = true,
-    private val apiVersion: String = "2.5"
+    open val method: HttpMethod,
+    open val path: String,
+    open val contentType: ContentType = ContentType.Application.Json,
+    open val pathParams: List<Any> = listOf(),
+    open val queryParams: Map<String, Any?> = mapOf(),
+    open val bodyData: Any? = null,
+    open val expectSuccess: Boolean = true,
+    open val requireAuth: Boolean = true,
+    private val pathBase: String = ""
 ) {
     val fullPath: String
-        get() = "data/$apiVersion/$path" + if (pathParams.isNotEmpty())
+        get() = "$pathBase/$path" + if (pathParams.isNotEmpty())
             "/" + pathParams.map { it.toString().trim() }.filter { it.isNotEmpty() }.joinToString("/")
         else
             ""
 
     val params: HttpRequestBuilder.() -> Unit = {
         queryParams.forEach { (key, value) ->
-            parameter(key, value.toString())
+            val valString = value?.toString()
+            if (valString?.isNotEmpty() == true) {
+                parameter(key, valString)
+            }
         }
     }
 }
