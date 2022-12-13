@@ -87,6 +87,35 @@ struct ContentView: View {
                     }
                     Spacer()
                 }.padding(.top, 16)
+                
+                let windString = data.getWindStr()
+                if (!windString.isEmpty) {
+                    HStack {
+                        Spacer()
+                        Image("IconWind")
+                            .padding(6)
+                        Text(windString)
+                        Spacer()
+                    }.padding(.vertical, 16)
+                }
+                
+                let sunriseStr = data.sunriseStr ?? ""
+                let sunsetStr = data.sunsetStr ?? ""
+                if (!sunriseStr.isEmpty && !sunsetStr.isEmpty) {
+                    HStack {
+                        Spacer()
+                        Image("IconSunrise")
+                            .padding(6)
+                        Text(sunriseStr)
+
+                        Spacer()
+
+                        Image("IconSunset")
+                            .padding(6)
+                        Text(sunsetStr)
+                        Spacer()
+                    }.padding(.vertical, 16)
+                }
             }
             Spacer()
         }.padding(8).onAppear {
