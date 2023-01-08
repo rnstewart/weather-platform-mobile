@@ -1,14 +1,12 @@
 package com.zmosoft.weatherplatform.repositories
 
 import com.zmosoft.weatherplatform.api.APIResponse
-import com.zmosoft.weatherplatform.api.GoogleMapsService
 import com.zmosoft.weatherplatform.api.models.response.geo.AutocompletePlacesData
 import com.zmosoft.weatherplatform.api.models.response.geo.PlaceDetailsResponse
 import com.zmosoft.weatherplatform.utils.BackgroundDispatcher
 import kotlinx.coroutines.withContext
 
 data class GoogleMapsRepository(
-    private val api: GoogleMapsService,
     val data: GoogleMapsData = GoogleMapsData(),
     val error: APIResponse.APIError? = null
 ): RepositoryBase() {
@@ -38,7 +36,7 @@ data class GoogleMapsRepository(
         longitude: Double? = null
     ): GoogleMapsRepository {
         return withContext (BackgroundDispatcher) {
-            val response = api.placesAutoComplete(
+            val response = googleMapsService.placesAutoComplete(
                 input = input,
                 latitude = latitude,
                 longitude = longitude
@@ -61,7 +59,7 @@ data class GoogleMapsRepository(
         return withContext (BackgroundDispatcher) {
             val placeId = location.placeId
             if (placeId?.isNotEmpty() == true) {
-                val response = api.placeDetails(placeId = placeId)
+                val response = googleMapsService.placeDetails(placeId = placeId)
                 response.data?.result?.geometry?.location?.let { locationResult ->
                     val latitude = locationResult.latitude
                     val longitude = locationResult.longitude
@@ -87,7 +85,7 @@ data class GoogleMapsRepository(
         fields: String? = "address_component,name,geometry"
     ): GoogleMapsRepository {
         return withContext (BackgroundDispatcher) {
-            val response = api.placeDetails(placeId = placeId, fields = fields)
+            val response = googleMapsService.placeDetails(placeId = placeId, fields = fields)
 
             copy(
                 data = data.copy(

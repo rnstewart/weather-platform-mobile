@@ -35,16 +35,12 @@ object SharedModules {
     val repositoriesModule = DI.Module("Shared/Repositories") {
         bind {
             singleton {
-                WeatherRepository(
-                    api = instance()
-                )
+                WeatherRepository()
             }
         }
         bind {
             singleton {
-                GoogleMapsRepository(
-                    api = instance()
-                )
+                GoogleMapsRepository()
             }
         }
     }
