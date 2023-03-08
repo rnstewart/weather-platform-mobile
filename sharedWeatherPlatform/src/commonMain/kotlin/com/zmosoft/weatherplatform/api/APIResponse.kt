@@ -1,7 +1,7 @@
 package com.zmosoft.weatherplatform.api
 
 import com.zmosoft.weatherplatform.api.models.response.ResponseBase
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import io.ktor.http.*
 
 data class APIResponse<T : ResponseBase>(

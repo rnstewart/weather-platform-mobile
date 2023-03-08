@@ -8,7 +8,6 @@ import com.zmosoft.weatherplatform.utils.StringFormat
 import com.zmosoft.weatherplatform.utils.kelvinToFahrenheit
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
 
 @Serializable
@@ -26,14 +25,6 @@ data class WeatherDataResponse(
     var dt: Long? = null,
     var timeZone: Long? = null
 ) : ResponseBase() {
-    @Transient
-    private val timeFormat = DateFormat(Constants.TIME_FORMAT)
-
-    val timeZoneHours: Int?
-        get() = timeZone?.toDouble()?.let {
-            it / (3600.0)
-        }?.roundToInt()
-
     @Serializable
     data class Coord(
         var lon: Double? = null,
@@ -116,19 +107,19 @@ data class WeatherDataResponse(
 
     val sunriseStr: String?
         get() = sys?.sunrise?.let {
-        DateTimeTz.fromUnix(it * 1000).format(timeFormat)
+        DateTimeTz.fromUnix(it * 1000).format(DateFormat(Constants.TIME_FORMAT))
     } ?: run {
         null
     }
 
     val sunsetStr: String?
         get() = sys?.sunset?.let { sunset ->
-            DateTimeTz.fromUnix(sunset * 1000).format(timeFormat)
+            DateTimeTz.fromUnix(sunset * 1000).format(DateFormat(Constants.TIME_FORMAT))
         } ?: run {
             null
         }
 
-    fun getWindDirectionString(deg: Int?): String {
+    private fun getWindDirectionString(deg: Int?): String {
         return deg?.toDouble()?.let {
             when {
                 (deg >= 22.5 && deg < 67.5) -> "NE"

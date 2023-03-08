@@ -7,13 +7,13 @@ import com.zmosoft.weatherplatform.utils.PlatformInfo
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 open class Api (
@@ -48,10 +48,10 @@ open class Api (
     protected fun getClient(auth: Auth?, expectSuccess: Boolean = true): HttpClient {
         return HttpClient {
             this.expectSuccess = expectSuccess
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(jsonParser)
-                acceptContentTypes = listOf(
-                    ContentType.Application.Json
+            install(ContentNegotiation) {
+                json(
+                    json = jsonParser,
+                    contentType = ContentType.Application.Json
                 )
             }
             if (PlatformInfo.isDebug()) {
@@ -62,6 +62,9 @@ open class Api (
             }
             defaultRequest {
                 host = baseUrl
+                url {
+                    protocol = URLProtocol.HTTPS
+                }
                 val authHeader = auth?.authHeader
                 if (authHeader?.isNotEmpty() == true) {
                     header("Authorization", "Basic $authHeader")
@@ -71,9 +74,9 @@ open class Api (
     }
 
     protected suspend inline fun <reified T : ResponseBase> decodeResponse(response: HttpResponse): Triple<T?, HttpStatusCode, String?> {
-        logEvent("decodeObject(): httpStatusCode = ${response.status}; str = ${response.readText()}")
-        val responseObject = response.receive<T>()
-        logEvent("decodeObject(): responseObject<${responseObject::class.simpleName}> = $responseObject")
+        logEvent("decodeResponse(): httpStatusCode = ${response.status}; str = ${response.bodyAsText()}")
+        val responseObject = response.body<T>()
+        logEvent("decodeResponse(): responseObject<${responseObject::class.simpleName}> = $responseObject")
         return Triple(
             responseObject,
             response.status,
